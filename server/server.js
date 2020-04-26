@@ -33,6 +33,10 @@ universe.addWorld(world);
 
 // Add the WebSocket handlers
 io.on('connection', function(socket) {
+    io.sockets.emit("connectResponse", {
+        id: socket.id,
+        settings: settings
+    });
     socket.on('spawn', function() {
         var player = new Player();
         universe.worlds[0].addPlayer(player, socket.id);
@@ -45,6 +49,7 @@ io.on('connection', function(socket) {
         if (data.right) {
             player.angle += 2 * Math.PI * settings.rotationSpeed;
         }
+        player.speed = data.boost ? settings.boostSpeed : settings.movementSpeed;
     });
 });
 

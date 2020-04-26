@@ -2,6 +2,8 @@ import { getViewport } from "./viewport.js";
 import { Controls } from "./controls.js";
 
 var cache = {};
+var settings = {};
+var socketID = 0;
 
 var socket = io();
 socket.on('message', function(data) {
@@ -24,6 +26,12 @@ document.addEventListener('keydown', function(event) {
         case 68: // D
             controls.right = true;
             break;
+        case 83: // S
+            controls.boost = true;
+            break;
+        case 32: // space
+            controls.boost = true;
+            break;
     }
 });
 document.addEventListener('keyup', function(event) {
@@ -40,13 +48,24 @@ document.addEventListener('keyup', function(event) {
         case 68: // D
             controls.right = false;
             break;
+        case 83: // S
+            controls.boost = false;
+            break;
+        case 32: // space
+            controls.boost = false;
+            break;
     }
 });
 
 socket.emit('spawn');
-setInterval(function() {
-    socket.emit('controls', controls);
-}, 20);
+socket.on("connectResponse", function(data) {
+    console.log("Connected to an arena.");
+    settings = data.settings;
+    socketID = data.id;
+    setInterval(function() {
+        socket.emit('controls', controls);
+    }, settings.stepTime);
+});
 
 var canvas = document.getElementById('canvas');
 canvas.width = window.innerWidth;
@@ -64,13 +83,26 @@ window.addEventListener("resize", function(){
     draw(); 
 });
 
+var cameraPosition = { x: 0, y: 0 };
+const img = document.getElementById("bgimg");
+
 function draw() {
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = 'green';
+    for (var id in cache) { if (id == socketID) { cameraPosition = cache[id].position; } }
+    context.beginPath();
+    context.arc(window.innerWidth/2 - cameraPosition.x, window.innerHeight/2 - cameraPosition.y, settings.worldSize, 0, 2 * Math.PI);
+    context.translate(-cameraPosition.x, -cameraPosition.y);
+    context.fillStyle = context.createPattern(img, "repeat");;
+    context.fill();
+    context.translate(cameraPosition.x, cameraPosition.y);
+    context.strokeStyle = "#0055ff";
+    context.lineWidth = 20;
+    context.stroke();
+    context.fillStyle = '#00ff00';
     for (var id in cache) {
         var player = cache[id];
         context.beginPath();
-        context.arc(player.position.x, player.position.y, 10, 0, 2 * Math.PI);
+        context.arc(player.position.x + window.innerWidth/2 - cameraPosition.x, player.position.y + window.innerHeight/2 - cameraPosition.y, 20, 0, 2 * Math.PI);
         context.fill();
     }
 }
