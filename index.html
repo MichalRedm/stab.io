@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Stab.io</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="keywords" content="io,game,multiplayer,online,stab" />
+        <meta name="description" content="A massive multiplayer browser game." />
+        <meta name="author" content="Michał Redmer <michal.redm@gmail.com>" />
+        <link rel="stylesheet" src="/static/css/main.css" />
+        <style>
+                        
+            *,
+            *::before,
+            *::after {
+                box-sizing: inherit;
+                margin: 0;
+                padding: 0;
+                border: none;
+            }
+
+            html {
+                font-size: 62.5%;
+                box-sizing: border-box;
+            }
+
+            body {
+                background-color: black;
+                overflow: hidden;
+            }
+        </style>
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="module" src="/static/game.js" async></script>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+    </body>
+</html>
