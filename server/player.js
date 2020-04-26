@@ -1,3 +1,6 @@
+const Settings = require("./settings");
+let settings = new Settings();
+
 class Player {
     constructor() {
         var d = new Date();
@@ -9,8 +12,10 @@ class Player {
     update() {
         var d = new Date();
         var t = d.getTime();
-        this.position.x += Math.cos(this.angle) * 10 * (t - this.lastUpdateTime) / 20;
-        this.position.y += Math.sin(this.angle) * 10 * (t - this.lastUpdateTime) / 20;
+        var newPositionX = this.position.x + Math.cos(this.angle) * 10 * (t - this.lastUpdateTime) / settings.stepTime;
+        var newPositionY = this.position.y + Math.sin(this.angle) * 10 * (t - this.lastUpdateTime) / settings.stepTime;
+        this.position.x = Math.abs(newPositionX) <= settings.worldSize ? newPositionX : this.position.x;
+        this.position.y = Math.abs(newPositionY) <= settings.worldSize ? newPositionY : this.position.y;
         this.lastUpdateTime = t;
     }
 }
