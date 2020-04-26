@@ -4,6 +4,7 @@ import { Controls } from "./controls.js";
 var cache = {};
 var settings = {};
 var socketID = 0;
+const spawnscreen = document.getElementById("spawnscreen");
 
 var socket = io();
 socket.on('message', function(data) {
@@ -57,7 +58,12 @@ document.addEventListener('keyup', function(event) {
     }
 });
 
-socket.emit('spawn');
+document.getElementById("spawnButton").addEventListener("click", function(){
+    socket.emit('spawn');
+    console.log("Spawned.");
+    spawnscreen.style.display = "none";
+});
+
 socket.on("connectResponse", function(data) {
     console.log("Connected to an arena.");
     settings = data.settings;

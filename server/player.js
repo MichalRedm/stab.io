@@ -9,6 +9,7 @@ class Player {
         this.position = { x: 0, y: 0 };
         this.lastUpdateTime = d.getTime();
         this.speed = settings.movementSpeed;
+        this.name = "";
     }
     update() {
         var d = new Date();

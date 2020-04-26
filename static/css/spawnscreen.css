@@ -1,0 +1,59 @@
+#spawnscreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    background-color: #00102080;
+}
+
+#centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#nameInput {
+    font-size: 1.1em;
+    color: #000010;
+    text-align: center;
+    display: block;
+    border: 5px solid #0055ff;
+    border-radius: 16px;
+    background-color: #daeafa;
+    padding: 16px;
+    width: 350px;
+    box-shadow: 0 0 32px 0 #0055ff;
+}
+
+#nameInput:focus {
+    animation: pulse-blue 3s infinite;
+}
+
+@keyframes pulse-blue {
+    0%   { box-shadow: 0 0 32px 0 #0055ffff; }
+    50%  { box-shadow: 0 0 32px 0 #0055ff80; }
+    100% { box-shadow: 0 0 32px 0 #0055ffff; }
+}
+
+#spawnButton {
+    font-size: 1.1em;
+    color: #daeafa;
+    text-align: center;
+    display: block;
+    border: 5px solid #0055ff;
+    border-radius: 16px;
+    background-color: #023bac;
+    padding: 16px;
+    width: 350px;
+    box-shadow: 0 0 32px 0 #0055ff;
+    cursor: pointer;
+    margin-top: 32px;
+}
+
+#spawnButton:hover {
+    animation: pulse-blue 3s infinite;
+}

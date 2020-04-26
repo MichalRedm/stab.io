@@ -43,13 +43,15 @@ io.on('connection', function(socket) {
     });
     socket.on('controls', function(data) {
         var player = universe.worlds[0].players[socket.id];
-        if (data.left) {
-            player.angle -= 2 * Math.PI * settings.rotationSpeed;
+        if (player) {
+            if (data.left) {
+                player.angle -= 2 * Math.PI * settings.rotationSpeed;
+            }
+            if (data.right) {
+                player.angle += 2 * Math.PI * settings.rotationSpeed;
+            }
+            player.speed = data.boost ? settings.boostSpeed : settings.movementSpeed;
         }
-        if (data.right) {
-            player.angle += 2 * Math.PI * settings.rotationSpeed;
-        }
-        player.speed = data.boost ? settings.boostSpeed : settings.movementSpeed;
     });
 });
 
