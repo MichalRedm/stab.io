@@ -28,19 +28,10 @@ server.listen(5000, function() {
     console.log('Starting server on port 5000');
 });
 
-// Add the WebSocket handlers
-io.on('connection', function(socket) {
-});
-
-/*
-setInterval(function() {
-    io.sockets.emit('message', 'test');
-}, 1000);
-*/
-
 let world = new World();
 universe.addWorld(world);
 
+// Add the WebSocket handlers
 io.on('connection', function(socket) {
     socket.on('spawn', function() {
         var player = new Player();
