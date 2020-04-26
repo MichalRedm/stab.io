@@ -37,8 +37,8 @@ io.on('connection', function(socket) {
         id: socket.id,
         settings: settings
     });
-    socket.on('spawn', function() {
-        var player = new Player();
+    socket.on('spawn', function(data) {
+        var player = new Player(data);
         universe.worlds[0].addPlayer(player, socket.id);
     });
     socket.on('controls', function(data) {

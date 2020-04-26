@@ -4,7 +4,7 @@ class Settings {
         this.movementSpeed = 0.5;
         this.boostSpeed = 0.75;
         this.stepTime = 20;
-        this.worldSize = 2000;
+        this.worldSize = 4000;
     }
 }
 

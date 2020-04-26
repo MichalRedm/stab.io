@@ -2,14 +2,14 @@ const Settings = require("./settings");
 let settings = new Settings();
 
 class Player {
-    constructor() {
+    constructor(data) {
         var d = new Date();
         this.startTime = d.getTime();
         this.angle = 0;
         this.position = { x: 0, y: 0 };
         this.lastUpdateTime = d.getTime();
         this.speed = settings.movementSpeed;
-        this.name = "";
+        this.name = data.name;
     }
     update() {
         var d = new Date();

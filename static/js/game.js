@@ -59,7 +59,10 @@ document.addEventListener('keyup', function(event) {
 });
 
 document.getElementById("spawnButton").addEventListener("click", function(){
-    socket.emit('spawn');
+    var name = document.getElementById("nameInput").value;
+    socket.emit('spawn', {
+        name: name
+    });
     console.log("Spawned.");
     spawnscreen.style.display = "none";
 });
@@ -104,11 +107,16 @@ function draw() {
     context.strokeStyle = "#0055ff";
     context.lineWidth = 20;
     context.stroke();
-    context.fillStyle = '#00ff00';
     for (var id in cache) {
         var player = cache[id];
+        context.fillStyle = '#00ff00';
         context.beginPath();
         context.arc(player.position.x + window.innerWidth/2 - cameraPosition.x, player.position.y + window.innerHeight/2 - cameraPosition.y, 20, 0, 2 * Math.PI);
         context.fill();
+        context.fillStyle = "#ffffff";
+        context.font = "16px Arial";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillText(player.name, player.position.x + window.innerWidth/2 - cameraPosition.x, player.position.y + window.innerHeight/2 - cameraPosition.y);
     }
 }
