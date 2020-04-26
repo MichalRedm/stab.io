@@ -16,11 +16,11 @@ var server = http.Server(app);
 var io = socketIO(server);
 
 app.set('port', 5000);
-app.use('/static', express.static(__dirname + '/static'));
+app.use('/static', express.static(path.join(__dirname, '..', 'static')));
 
 // Routing
 app.get('/', function(request, response) {
-    response.sendFile(path.join(__dirname, 'index.html'));
+    response.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 // Starts the server.
