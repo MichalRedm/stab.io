@@ -97,16 +97,20 @@ var cameraPosition = { x: 0, y: 0 };
 const img = document.getElementById("bgimg");
 const ship = document.getElementById("atlas");
 const leaderboard = document.getElementById("leaderboardTable");
+const bgSpeed = 1;
+const bgScale = 1;
 
 function draw() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     for (var id in cache) { if (id == socketID) { cameraPosition = cache[id].position; } }
     context.beginPath();
     context.arc(window.innerWidth/2 - cameraPosition.x, window.innerHeight/2 - cameraPosition.y, settings.worldSize, 0, 2 * Math.PI);
-    context.translate(-cameraPosition.x, -cameraPosition.y);
+    context.translate(-cameraPosition.x * bgSpeed, -cameraPosition.y * bgSpeed);
+    context.scale(bgScale, bgScale);
     context.fillStyle = context.createPattern(img, "repeat");;
     context.fill();
-    context.translate(cameraPosition.x, cameraPosition.y);
+    context.scale(1/bgScale, 1/bgScale);
+    context.translate(cameraPosition.x * bgSpeed, cameraPosition.y * bgSpeed);
     context.strokeStyle = "#0055ff";
     context.lineWidth = 20;
     context.stroke();
