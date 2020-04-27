@@ -1,4 +1,6 @@
-@import "reset.css";
+@import "fonts.css";
+@import "global.css";
 @import "body.css";
 @import "canvas.css";
 @import "spawnscreen.css";
+@import "leaderboard.css";

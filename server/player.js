@@ -10,6 +10,8 @@ class Player {
         this.lastUpdateTime = d.getTime();
         this.speed = settings.movementSpeed;
         this.name = data.name;
+        this.color = data.color;
+        this.score = 0;
     }
     update() {
         var d = new Date();

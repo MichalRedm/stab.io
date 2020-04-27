@@ -1,0 +1,9 @@
+<svg version="1.1" baseProfile="full" width="128" height="128" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <filter id="f1" x="-50%" y="-50%" width="256" height="256" filterUnits="userSpaceOnUse">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="16 16" />
+        </filter>
+    </defs>
+    <circle cx="64" cy="64" r="32" stroke-width="0" fill="#ff0000" filter="url(#f1)" fill-opacity="1" />
+    <circle cx="64" cy="64" r="32" stroke-width="4" stroke="#ff0000" fill="#ff5050" />
+</svg>

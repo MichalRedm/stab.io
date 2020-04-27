@@ -1,0 +1,17 @@
+#leaderboard {
+    position: absolute;
+    top: 0;
+    right: 8px;
+}
+
+#leaderboard > h1 {
+    text-align: center;
+}
+
+#leaderboardTable {
+    width: 300px;
+}
+
+#leaderboardTable tr td:last-child {
+    text-align: right;
+}

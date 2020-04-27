@@ -9,5 +9,7 @@
 
 html {
     font-size: 20px;
+    font-family: "Exo2", sans-serif;
+    color: #fff;
     box-sizing: border-box;
 }

@@ -61,7 +61,8 @@ document.addEventListener('keyup', function(event) {
 document.getElementById("spawnButton").addEventListener("click", function(){
     var name = document.getElementById("nameInput").value;
     socket.emit('spawn', {
-        name: name
+        name: name,
+        color: "red"
     });
     console.log("Spawned.");
     spawnscreen.style.display = "none";
@@ -94,6 +95,8 @@ window.addEventListener("resize", function(){
 
 var cameraPosition = { x: 0, y: 0 };
 const img = document.getElementById("bgimg");
+const ship = document.getElementById("atlas");
+const leaderboard = document.getElementById("leaderboardTable");
 
 function draw() {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -107,16 +110,20 @@ function draw() {
     context.strokeStyle = "#0055ff";
     context.lineWidth = 20;
     context.stroke();
+    leaderboard.innerHTML = "";
     for (var id in cache) {
         var player = cache[id];
-        context.fillStyle = '#00ff00';
-        context.beginPath();
-        context.arc(player.position.x + window.innerWidth/2 - cameraPosition.x, player.position.y + window.innerHeight/2 - cameraPosition.y, 20, 0, 2 * Math.PI);
-        context.fill();
-        context.fillStyle = "#ffffff";
-        context.font = "16px Arial";
+        leaderboard.innerHTML += "<tr><td>" + player.name + "</td><td>" + player.score + "</td></tr>";
+        context.drawImage(ship, player.position.x + window.innerWidth/2 - cameraPosition.x - 64, player.position.y + window.innerHeight/2 - cameraPosition.y - 64, 128, 128);
+        context.font = "20px Exo2";
         context.textAlign = "center";
         context.textBaseline = "middle";
+        context.strokeStyle = "#000000";
+        context.shadowBlur = 4;
+        context.lineWidth = 4;
+        context.strokeText(player.name, player.position.x + window.innerWidth/2 - cameraPosition.x, player.position.y + window.innerHeight/2 - cameraPosition.y);
+        context.shadowBlur = 0;
+        context.fillStyle = "#ffffff";
         context.fillText(player.name, player.position.x + window.innerWidth/2 - cameraPosition.x, player.position.y + window.innerHeight/2 - cameraPosition.y);
     }
 }
