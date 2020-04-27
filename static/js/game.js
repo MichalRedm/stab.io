@@ -80,7 +80,7 @@ socket.on("connectResponse", function(data) {
 var canvas = document.getElementById('canvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-var context = canvas.getContext('2d');
+var ctx = canvas.getContext('2d');
 socket.on('state', function(cacheNew) {
     cache = cacheNew;
     draw();
@@ -101,33 +101,39 @@ const bgSpeed = 1;
 const bgScale = 1;
 
 function draw() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (var id in cache) { if (id == socketID) { cameraPosition = cache[id].position; } }
-    context.beginPath();
-    context.arc(window.innerWidth/2 - cameraPosition.x, window.innerHeight/2 - cameraPosition.y, settings.worldSize, 0, 2 * Math.PI);
-    context.translate(-cameraPosition.x * bgSpeed, -cameraPosition.y * bgSpeed);
-    context.scale(bgScale, bgScale);
-    context.fillStyle = context.createPattern(img, "repeat");;
-    context.fill();
-    context.scale(1/bgScale, 1/bgScale);
-    context.translate(cameraPosition.x * bgSpeed, cameraPosition.y * bgSpeed);
-    context.strokeStyle = "#0055ff";
-    context.lineWidth = 20;
-    context.stroke();
+    ctx.beginPath();
+    ctx.arc(window.innerWidth/2 - cameraPosition.x, window.innerHeight/2 - cameraPosition.y, settings.worldSize, 0, 2 * Math.PI);
+    ctx.translate(-cameraPosition.x * bgSpeed, -cameraPosition.y * bgSpeed);
+    ctx.scale(bgScale, bgScale);
+    ctx.fillStyle = ctx.createPattern(img, "repeat");;
+    ctx.fill();
+    ctx.scale(1/bgScale, 1/bgScale);
+    ctx.translate(cameraPosition.x * bgSpeed, cameraPosition.y * bgSpeed);
+    ctx.strokeStyle = "#0055ff";
+    ctx.lineWidth = 20;
+    ctx.stroke();
     leaderboard.innerHTML = "";
     for (var id in cache) {
         var player = cache[id];
+        var coords = { x: player.position.x + window.innerWidth/2 - cameraPosition.x, y: player.position.y + window.innerHeight/2 - cameraPosition.y };
         leaderboard.innerHTML += "<tr><td>" + player.name + "</td><td>" + player.score + "</td></tr>";
-        context.drawImage(ship, player.position.x + window.innerWidth/2 - cameraPosition.x - 64, player.position.y + window.innerHeight/2 - cameraPosition.y - 64, 128, 128);
-        context.font = "20px Exo2";
-        context.textAlign = "center";
-        context.textBaseline = "middle";
-        context.strokeStyle = "#000000";
-        context.shadowBlur = 4;
-        context.lineWidth = 4;
-        context.strokeText(player.name, player.position.x + window.innerWidth/2 - cameraPosition.x, player.position.y + window.innerHeight/2 - cameraPosition.y);
-        context.shadowBlur = 0;
-        context.fillStyle = "#ffffff";
-        context.fillText(player.name, player.position.x + window.innerWidth/2 - cameraPosition.x, player.position.y + window.innerHeight/2 - cameraPosition.y);
+        ctx.strokeStyle = "#ff0000";
+        ctx.beginPath();
+        ctx.moveTo(coords.x, coords.y);
+        ctx.lineTo(coords.x + Math.cos(player.angle) * 200, coords.y + Math.sin(player.angle) * 200);
+        ctx.stroke();
+        ctx.drawImage(ship, coords.x - 64, coords.y - 64, 128, 128);
+        ctx.font = "20px Exo2";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.strokeStyle = "#000000";
+        ctx.shadowBlur = 4;
+        ctx.lineWidth = 4;
+        ctx.strokeText(player.name, player.position.x + window.innerWidth/2 - cameraPosition.x, player.position.y + window.innerHeight/2 - cameraPosition.y);
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(player.name, player.position.x + window.innerWidth/2 - cameraPosition.x, player.position.y + window.innerHeight/2 - cameraPosition.y);
     }
 }
