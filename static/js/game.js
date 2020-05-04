@@ -120,10 +120,13 @@ function draw() {
         var coords = { x: player.position.x + window.innerWidth/2 - cameraPosition.x, y: player.position.y + window.innerHeight/2 - cameraPosition.y };
         leaderboard.innerHTML += "<tr><td>" + player.name + "</td><td>" + player.score + "</td></tr>";
         ctx.strokeStyle = "#ff0000";
-        ctx.beginPath();
-        ctx.moveTo(coords.x, coords.y);
-        ctx.lineTo(coords.x + Math.cos(player.angle) * 200, coords.y + Math.sin(player.angle) * 200);
-        ctx.stroke();
+        ctx.lineWidth = 16;
+        player.swords.forEach(element => {
+            ctx.beginPath();
+            ctx.moveTo(coords.x, coords.y);
+            ctx.lineTo(coords.x + Math.cos(player.angle + element[0] * Math.PI) * (element[1] + element[2] * player.score) , coords.y + Math.sin(player.angle + element[0] * Math.PI) * (element[1] + element[2] * player.score));
+            ctx.stroke();
+        });
         ctx.drawImage(ship, coords.x - 64, coords.y - 64, 128, 128);
         ctx.font = "20px Exo2";
         ctx.textAlign = "center";

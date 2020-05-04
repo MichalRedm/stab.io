@@ -12,6 +12,10 @@ class Player {
         this.name = data.name;
         this.color = data.color;
         this.score = 0;
+        this.swords = [
+            [-0.15, 150, 0.1],
+            [0.15, 150, 0.1]
+        ]
     }
     update() {
         var d = new Date();
@@ -29,6 +33,15 @@ class Player {
         /*this.position.x = Math.abs(newPositionX) <= settings.worldSize ? newPositionX : this.position.x;
         this.position.y = Math.abs(newPositionY) <= settings.worldSize ? newPositionY : this.position.y;*/
         this.lastUpdateTime = t;
+    }
+    setClass(classId) {
+        switch classId {
+            case 0:
+                this.swords = [
+                    [0, 150, 0.1]
+                ];
+                break;
+        }
     }
 }
 
